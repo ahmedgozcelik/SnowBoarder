@@ -6,17 +6,21 @@ using UnityEngine.SceneManagement;
 public class FinishLine : MonoBehaviour
 {
     [SerializeField] float loadDelay = 1f;
+    [SerializeField] ParticleSystem finishEffect;
 
     /// <summary>
-    /// Player ile finishLine temas ederse Zafer yazdýr.
+    /// Player ile finishLine temas ederse...
     /// </summary>
     /// <param name="collision"></param>
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.tag == "Player")
         {
-            Invoke("ReloadScene", loadDelay);
+            finishEffect.Play(); // Efekt
+            Invoke("ReloadScene", loadDelay); // Delay ekle
         }
+
+        
     }
 
     void ReloadScene()

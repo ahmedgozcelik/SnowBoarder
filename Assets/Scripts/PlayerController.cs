@@ -14,12 +14,12 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //Sol ok tuþuna basýlýrsa torqueAmount kadar tork uygula.
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.A))
         {
             rb2d.AddTorque(torqueAmount);
         }
         //Sað ok tuþuna basýlýrsa torqueAmount kadar tork uygula. Zýt yön olmasýna dikkat!
-        if (Input.GetKey(KeyCode.RightArrow)) 
+        if (Input.GetKey(KeyCode.D)) 
         {
             rb2d.AddTorque(-torqueAmount);
         }
