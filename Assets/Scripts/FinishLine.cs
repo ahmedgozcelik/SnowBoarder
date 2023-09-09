@@ -12,11 +12,12 @@ public class FinishLine : MonoBehaviour
     /// Player ile finishLine temas ederse...
     /// </summary>
     /// <param name="collision"></param>
-    private void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
         {
             finishEffect.Play(); // Efekt
+            GetComponent<AudioSource>().Play(); // Ses
             Invoke("ReloadScene", loadDelay); // Delay ekle
         }
 

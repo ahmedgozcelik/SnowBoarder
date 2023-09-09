@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] float torqueAmount = 1f; // Uygulanacak tork kuvveti
+    [SerializeField] float torqueAmount = 0.1f; // Uygulanacak tork kuvveti
     [SerializeField] float boostSpeed = 30f;
-    [SerializeField] float baseSpeed = 20f;
+    [SerializeField] float baseSpeed = 0f;
+
 
     Rigidbody2D rb2d; // Torku Rigidbody'e uygulayacaðýmýz için rigidbody'i tanýmladýk.
     SurfaceEffector2D surfaceEffector2D; // SurfaceEffector'u tanýmladýk.
+    bool canMove = true;
+    float timeCounter = 0.0f;
 
     void Start()
     {
@@ -19,33 +22,66 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        RotatePlayer();
-        RespondToBoost();
+        if (canMove)
+        {
+            RotatePlayer();
+            //RespondToBoost();
+        }
+    }
+
+    public void DisableControls()
+    {
+        canMove = false;
     }
 
     void RotatePlayer()
     {
-        //Sol ok tuþuna basýlýrsa torqueAmount kadar tork uygula.
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A)) //Sol ok tuþuna basýlýrsa torqueAmount kadar tork uygula. 
         {
             rb2d.AddTorque(torqueAmount);
+
+            timeCounter += Time.deltaTime;
+            if(timeCounter >= 0.3f)
+            {
+                surfaceEffector2D.speed--;
+                timeCounter = 0.0f;
+            }
         }
-        //Sað ok tuþuna basýlýrsa torqueAmount kadar tork uygula. Zýt yön olmasýna dikkat!
-        if (Input.GetKey(KeyCode.D))
+        else if (Input.GetKey(KeyCode.D)) //Sað ok tuþuna basýlýrsa torqueAmount kadar tork uygula. Zýt yön olmasýna dikkat!
         {
             rb2d.AddTorque(-torqueAmount);
-        }
-    }// Player döndürme - tork ile
 
-    void RespondToBoost()
-    {
-        if (Input.GetKey(KeyCode.W))
-        {
-            surfaceEffector2D.speed = boostSpeed;
+            timeCounter += Time.deltaTime;
+            if (timeCounter >= 0.3f)
+            {
+                surfaceEffector2D.speed++;
+                timeCounter = 0.0f;
+            }
         }
         else
         {
-            surfaceEffector2D.speed = baseSpeed;
+            timeCounter += Time.deltaTime;
+            if (timeCounter >= 0.8f && surfaceEffector2D.speed > 0)
+            {
+                surfaceEffector2D.speed--;
+                timeCounter = 0.0f;
+            }
         }
-    }
+    }// Player döndürme - tork ile
+
+    //void RespondToBoost()
+    //{
+    //    if (Input.GetKey(KeyCode.W))
+    //    {
+    //        surfaceEffector2D.speed = boostSpeed;
+    //    }
+    //    else if (Input.GetKey(KeyCode.S))
+    //    {
+    //        surfaceEffector2D.speed = slowSpeed;
+    //    }
+    //    else
+    //    {
+    //        surfaceEffector2D.speed = baseSpeed;
+    //    }
+    //}
 }
