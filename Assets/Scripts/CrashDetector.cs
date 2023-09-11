@@ -9,6 +9,8 @@ public class CrashDetector : MonoBehaviour
     [SerializeField] ParticleSystem crashEffect;
     [SerializeField] AudioClip crashSFX;
 
+    public GameControl gameControl;
+
     bool hasCrashed = false;
 
     /// <summary>
@@ -24,11 +26,16 @@ public class CrashDetector : MonoBehaviour
             crashEffect.Play(); // Efekt oynasýn
             GetComponent<AudioSource>().PlayOneShot(crashSFX);
             Invoke("ReloadScene", loadDelay); // Invoke methodu ile beraber 1.parametrede belirtilen methoddan sonra loadDelay kadar bekle dedik.
+
+            gameControl.OpenGameOverPanel();
         }
     }
 
-    void ReloadScene()
-    {
-        SceneManager.LoadScene(0);
-    }
+
+
+
+    //void ReloadScene()
+    //{
+    //    SceneManager.LoadScene(0);
+    //}
 }

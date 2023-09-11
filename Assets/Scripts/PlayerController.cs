@@ -7,6 +7,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float torqueAmount = 0.1f; // Uygulanacak tork kuvveti
     [SerializeField] float boostSpeed = 30f;
     [SerializeField] float baseSpeed = 0f;
+    float control = 0;
+
+    public ScoreController scoreController;
 
 
     Rigidbody2D rb2d; // Torku Rigidbody'e uygulayacaðýmýz için rigidbody'i tanýmladýk.
@@ -27,6 +30,7 @@ public class PlayerController : MonoBehaviour
             RotatePlayer();
             //RespondToBoost();
         }
+        AddTumbleScore();
     }
 
     public void DisableControls()
@@ -69,19 +73,26 @@ public class PlayerController : MonoBehaviour
         }
     }// Player döndürme - tork ile
 
-    //void RespondToBoost()
-    //{
-    //    if (Input.GetKey(KeyCode.W))
-    //    {
-    //        surfaceEffector2D.speed = boostSpeed;
-    //    }
-    //    else if (Input.GetKey(KeyCode.S))
-    //    {
-    //        surfaceEffector2D.speed = slowSpeed;
-    //    }
-    //    else
-    //    {
-    //        surfaceEffector2D.speed = baseSpeed;
-    //    }
-    //}
+    void RespondToBoost()
+    {
+        if (Input.GetKey(KeyCode.W))
+        {
+            surfaceEffector2D.speed = boostSpeed;
+        }
+        else
+        {
+            surfaceEffector2D.speed = baseSpeed;
+        }
+    }
+
+    void AddTumbleScore()
+    {
+        control = Mathf.Abs(transform.localEulerAngles.z);
+        Debug.Log(control);
+        if (control >= 200)
+        {
+            scoreController.IncreaseScore(500);
+            scoreController.UpdateScoreText();
+        }
+    }
 }

@@ -383,7 +383,10 @@
 "Assets/Scripts/CrashDetector.cs"
 "Assets/Scripts/DustTrail.cs"
 "Assets/Scripts/FinishLine.cs"
+"Assets/Scripts/GameControl.cs"
+"Assets/Scripts/Gold.cs"
 "Assets/Scripts/PlayerController.cs"
+"Assets/Scripts/ScoreController.cs"
 -langversion:9.0
 
 /deterministic
